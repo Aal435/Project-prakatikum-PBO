@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - J.Coffee Drip</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f7f5;
+      color: #3e2723;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 20px;
+    }
+
+    .login-container {
+      max-width: 400px;
+      width: 100%;
+      padding: 30px 25px;
+      background: #fff8f0;
+      border: 2px solid #795548;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(62, 39, 35, 0.15);
+    }
+
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #3e2723;
+    }
+
+    .login-container label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 6px;
+      color: #5d4037;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      border: 1.5px solid #d7ccc8;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .login-container input[type="text"]:focus,
+    .login-container input[type="password"]:focus {
+      border-color: #795548;
+      outline: none;
+    }
+
+    .login-container button {
+      width: 100%;
+      background-color: #6d4c41;
+      color: white;
+      font-weight: bold;
+      font-size: 1.1rem;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .login-container button:hover {
+      background-color: #5d4037;
+    }
+
+    /* Optional: link back to home */
+    .back-home {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #6d4c41;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .back-home:hover {
+      text-decoration: underline;
+      color: #5d4037;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form th:action="@{/login}" method="post">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" placeholder="Masukkan username" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="Masukkan password" required />
+
+      <button type="submit">Masuk</button>
+    </form>
+    <a th:href="@{/register}" class="text-decoration-none">Don't have an account? Register here</a>
+  </div>
+</body>
+</html>

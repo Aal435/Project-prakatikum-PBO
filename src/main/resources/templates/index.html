@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Oke Seduh - Menu Makanan & Minuman</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: Arial, sans-serif; background-color: #f9f7f5; color: #3e2723; }
+        .navbar { position: fixed; top: 0; width: 100%; background-color: rgba(62, 39, 35, 0.95); color: white; display: flex; align-items: center; justify-content: flex-end; /* Diubah ke flex-end */ padding: 10px 20px; z-index: 1000; }
+        .nav-links { display: flex; align-items: center; gap: 10px; }
+        .nav-button { background: none; border: none; color: white; font-weight: bold; cursor: pointer; padding: 5px 10px; font-size: 1rem; text-decoration: none; }
+        .nav-button:hover { background-color: rgba(255, 255, 255, 0.2); border-radius: 5px; }
+        main.hero { margin-top: 70px; padding: 20px; }
+        .carousel { position: relative; max-width: 1000px; margin: 0 auto; overflow: hidden; border-radius: 10px; }
+        .carousel-track { display: flex; transition: transform 0.6s ease-in-out; width: 100%; }
+        .carousel-image { min-width: 100%; height: 500px; object-fit: cover; }
+        .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); font-size: 2.5rem; background: rgba(0, 0, 0, 0.6); border: none; color: white; padding: 10px 15px; cursor: pointer; z-index: 1; border-radius: 5px; }
+        .left { left: 10px; }
+        .right { right: 10px; }
+        #menu { padding: 50px 20px; background-color: #f9f1ec; }
+        #menu h2 { text-align: center; margin-bottom: 30px; font-size: 2rem; color: #3e2723; }
+        .menu-category { max-width: 1000px; margin: 0 auto 60px auto; }
+        .menu-category h3 { margin-bottom: 20px; font-size: 1.8rem; color: #5d4037; border-bottom: 2px solid #6d4c41; padding-bottom: 10px; }
+        .menu-items { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .menu-item { background: white; border-radius: 10px; padding: 15px; width: 230px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); text-align: center; }
+        .menu-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 10px; }
+        .menu-item h4 { margin: 10px 0 8px 0; color: #4e342e; font-size: 1.2rem; }
+        .menu-item p { color: #6d4c41; font-size: 0.95rem; margin-bottom: 8px; min-height: 40px; }
+        .price { font-weight: bold; color: #6d4c41; font-size: 1rem; }
+    </style>
+</head>
+<body>
+
+<header class="navbar" id="navbar-header"> 
+    <nav class="nav-links">
+        <a href="#menu" class="nav-button">MENU</a>
+        <a th:href="@{/login}" class="nav-button" sec:authorize="isAnonymous()">LOGIN</a>
+        <a th:href="@{/admin/menu/manage}" class="nav-button" sec:authorize="hasRole('ADMIN')">PANEL ADMIN</a>
+        
+        <a th:href="@{/profile}" class="nav-button" sec:authorize="isAuthenticated()" title="Profil">PROFIL</a>
+    </nav>
+</header>
+
+<main class="hero">
+    <div class="carousel">
+        <button class="carousel-btn left">&#10094;</button>
+        <div class="carousel-track" id="carouselTrack">
+            <img src="https://images.pexels.com/photos/3026808/pexels-photo-3026808.jpeg" class="carousel-image" />
+            <img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg" class="carousel-image" />
+            <img src="https://media-cdn.tripadvisor.com/media/photo-s/1c/0c/a3/50/mix-platter.jpg" class="carousel-image" />
+            <img src="https://images.pexels.com/photos/3892469/pexels-photo-3892469.jpeg?auto=compress&cs=tinysrgb&w=800" class="carousel-image" />
+        </div>
+        <button class="carousel-btn right">&#10095;</button>
+    </div>
+</main>
+
+<section id="menu">
+    <h2>Menu Kami</h2>
+
+    <div class="menu-category" id="makanan">
+        <h3>Makanan</h3>
+        <div class="menu-items" th:if="${not #lists.isEmpty(makananItems)}">
+            <div class="menu-item" th:each="item : ${makananItems}">
+                <img th:src="${item.imageUrl}" th:alt="${item.name}" />
+                <h4 th:text="${item.name}">Nama Makanan</h4>
+                <p th:text="${item.description}">Deskripsi makanan.</p>
+                <div class="price" th:text="'Rp' + ${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA')}">RpXX.XXX</div>
+                </div>
+        </div>
+        <p th:if="${#lists.isEmpty(makananItems)}" style="text-align:center; color: #777;">Menu makanan akan segera hadir!</p>
+    </div>
+
+    <div class="menu-category" id="minuman">
+        <h3>Minuman</h3>
+        <div class="menu-items" th:if="${not #lists.isEmpty(minumanItems)}">
+            <div class="menu-item" th:each="item : ${minumanItems}">
+                <img th:src="${item.imageUrl}" th:alt="${item.name}" />
+                <h4 th:text="${item.name}">Nama Minuman</h4>
+                <p th:text="${item.description}">Deskripsi minuman.</p>
+                <div class="price" th:text="'Rp' + ${#numbers.formatDecimal(item.price, 0, 'POINT', 0, 'COMMA')}">RpXX.XXX</div>
+                </div>
+        </div>
+        <p th:if="${#lists.isEmpty(minumanItems)}" style="text-align:center; color: #777;">Menu minuman akan segera hadir!</p>
+    </div>
+</section>
+
+<script>
+// Hanya menyisakan logika untuk Carousel
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('carouselTrack');
+    const slides = track ? Array.from(track.children) : [];
+    const leftBtn = document.querySelector('.carousel-btn.left');
+    const rightBtn = document.querySelector('.carousel-btn.right');
+    
+    if (!track || slides.length === 0 || !leftBtn || !rightBtn) {
+        console.warn("Elemen Carousel tidak ditemukan.");
+        return;
+    }
+
+    let currentIndex = 0;
+    let autoSlideInterval;
+
+    function updateCarousel() {
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        track.style.transform = 'translateX(' + (-slideWidth * currentIndex) + 'px)';
+    }
+
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+
+    function startAutoSlide() {
+        stopAutoSlide();
+        autoSlideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+        }, 5000);
+    }
+
+    leftBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+        stopAutoSlide();
+        startAutoSlide();
+    });
+
+    rightBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+        stopAutoSlide();
+        startAutoSlide();
+    });
+
+    window.addEventListener('resize', updateCarousel);
+    updateCarousel();
+    startAutoSlide();
+});
+</script>
+
+</body>
+</html>

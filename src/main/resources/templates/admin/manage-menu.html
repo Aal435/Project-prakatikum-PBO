@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">Admin - Kelola Menu</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        .admin-header { background-color: #3e2723; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .admin-header h1 { margin: 0; font-size: 1.8rem; }
+        .admin-nav a, .admin-nav button { color: white; text-decoration: none; margin-left: 20px; font-weight: 500; background: none; border: none; cursor: pointer; font-size: 1rem; }
+        .admin-nav a:hover, .admin-nav button:hover { text-decoration: underline; }
+        .admin-container { width: 100%; max-width: 1000px; margin: 30px auto; padding: 30px; background-color: #fff; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1); flex-grow: 1; }
+        .admin-container h2 { text-align: center; color: #3e2723; margin-bottom: 25px; font-size: 1.6rem;}
+        .message { padding: 12px; margin-bottom: 20px; border-radius: 6px; text-align: center; font-size: 0.95rem;}
+        .success-message { background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; }
+        .error-message { background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7; }
+        .btn-add-new { display: inline-block; padding: 10px 20px; background-color: #5d4037; color: white; text-decoration: none; border-radius: 6px; margin-bottom: 20px; font-size: 1rem; }
+        .btn-add-new:hover { background-color: #3e2723; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.95rem; }
+        th, td { border: 1px solid #e0e0e0; padding: 10px 15px; text-align: left; vertical-align: middle; }
+        th { background-color: #f8f9fa; color: #3e2723; font-weight: 600; }
+        td img { max-width: 70px; height: auto; border-radius: 4px; object-fit: cover; }
+        .actions a, .actions button { padding: 6px 10px; text-decoration: none; font-size:0.9rem; border-radius:4px; margin-right: 5px; border: none; cursor: pointer; color: white;}
+        .edit-btn { background-color: #ffc107; color: #212529;} /* Kuning */
+        .edit-btn:hover { background-color: #e0a800; }
+        .delete-btn { background-color: #dc3545; } /* Merah */
+        .delete-btn:hover { background-color: #c82333; }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Panel Admin</h1>
+        <nav class="admin-nav">
+            <a th:href="@{/admin/menu/manage}">Kelola Menu</a>
+            <a th:href="@{/}">Lihat Situs</a>
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit">Logout</button>
+            </form>
+        </nav>
+    </header>
+
+    <main class="admin-container">
+        <h2 th:text="${pageTitle}">Kelola Menu</h2>
+
+        <div th:if="${successMessage}" class="message success-message" th:text="${successMessage}"></div>
+        <div th:if="${errorMessage}" class="message error-message" th:text="${errorMessage}"></div>
+
+        <a th:href="@{/admin/menu/add}" class="btn-add-new">Tambah Menu Baru</a>
+
+        <table th:if="${not #lists.isEmpty(menuItems)}">
+            <thead>
+                <tr>
+                    <th>Gambar</th>
+                    <th>Nama</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
+                    <th>Deskripsi Singkat</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="item : ${menuItems}">
+                    <td><img th:src="${item.imageUrl}" th:alt="${item.name}" /></td>
+                    <td th:text="${item.name}">Nama Menu</td>
+                    <td th:text="${item.category}">Kategori</td>
+                    <td th:text="${#numbers.formatCurrency(item.price)}">Harga</td>
+                    <td th:text="${item.description != null ? (#strings.abbreviate(item.description, 50)) : ''}">Deskripsi</td>
+                    <td class="actions">
+                        <a th:href="@{/admin/menu/edit/{id}(id=${item.id})}" class="edit-btn">Edit</a>
+                        <form th:action="@{/admin/menu/delete/{id}(id=${item.id})}" method="get" style="display:inline;" onsubmit="return confirm('Anda yakin ingin menghapus item menu ini?');">
+                             <button type="submit" class="delete-btn">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p th:if="${#lists.isEmpty(menuItems)}">Belum ada menu item yang ditambahkan.</p>
+    </main>
+</body>
+</html>
