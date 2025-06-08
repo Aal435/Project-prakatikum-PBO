@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profil Pengguna</title>
+    <style>
+        /* CSS Reset Global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box; 
+        }
+
+        /* Style untuk Body Utama */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            padding-top: 70px; 
+        }
+
+        /* Style untuk Navbar (Sesuai yang sudah ada) */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0; 
+            width: 100%;
+            background-color: rgba(62, 39, 35, 0.95); 
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end; 
+            padding: 10px 25px; 
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 15px; 
+        }
+
+        .nav-button {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px 12px; 
+            font-size: 0.95rem; 
+            text-decoration: none;
+            border-radius: 5px; 
+            transition: background-color 0.3s ease; 
+        }
+
+        .nav-button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+
+        .user-icon {
+            font-size: 1.3rem; 
+            line-height: 1;
+        }
+
+        /* Style Khusus untuk Konten Profil */
+        .profile-content-wrapper { 
+            max-width: 700px;   
+            margin: 30px auto;  
+            padding: 30px 40px;  
+            background: #ffffff; 
+            border-radius: 12px; 
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
+        }
+
+        .profile-content-wrapper h1 {
+            text-align: center;
+            color: #3e2723; 
+            margin-bottom: 35px; 
+            font-size: 2.2rem; 
+            font-weight: 600; 
+        }
+
+        .profile-item {
+            display: flex; 
+            align-items: flex-start; 
+            margin-bottom: 18px; 
+            padding-bottom: 18px; 
+            border-bottom: 1px solid #e0e0e0; 
+            font-size: 1.05rem; 
+        }
+
+        .profile-item:last-child {
+            margin-bottom: 0; 
+            padding-bottom: 0; 
+            border-bottom: none; 
+        }
+
+        .profile-label {
+            flex-basis: 180px; 
+            flex-shrink: 0;   
+            font-weight: 600;  
+            color: #5d4037;   
+            padding-right: 15px; 
+        }
+
+        .profile-value {
+            color: #4f4f4f; 
+            word-break: break-all; 
+        }
+        
+        .anonymous-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: #555;
+        }
+        .anonymous-message a {
+            color: #c7a17a; 
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .anonymous-message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style untuk Tombol Aksi di Profil */
+        .profile-actions {
+            padding-top: 25px; /* Beri jarak dari detail profil di atasnya */
+            margin-top: 20px; /* Beri jarak tambahan jika ada border atas */
+            border-top: 1px solid #e0e0e0; /* Garis pemisah sebelum tombol aksi */
+            text-align: center; /* Agar tombol di tengah jika hanya satu atau beberapa */
+            display: flex; /* Gunakan flexbox untuk tata letak tombol yang lebih baik */
+            justify-content: center; /* Pusatkan tombol-tombol */
+            gap: 15px; /* Jarak antar tombol */
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: 10px 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background-color: #5d4037; /* Warna dasar tombol aksi */
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* margin: 0 10px; Dihapus karena menggunakan gap pada flex container */
+        }
+
+        .action-button.edit-button:hover {
+            background-color: #3e2723; 
+        }
+
+        /* Style baru untuk tombol logout */
+        .action-button.logout-button {
+            background-color: #b71c1c; /* Warna merah untuk logout (bahaya/penting) */
+        }
+        .action-button.logout-button:hover {
+            background-color: #9e1818; /* Warna merah lebih gelap saat hover */
+        }
+
+    </style>
+</head>
+<body>
+
+<header class="navbar" id="navbar-header"> 
+    <nav class="nav-links">
+        <a th:href="@{/login}" class="nav-button" sec:authorize="isAnonymous()">login</a>
+        <a th:href="@{/index}" class="nav-button user-icon-button" title="Home" sec:authorize="isAuthenticated()">
+            <span class="user-icon">&#9776;</span> </a>
+    </nav>
+</header>
+
+<div class="profile-content-wrapper"> 
+    <h1>Profil Saya</h1>
+
+    <div sec:authorize="isAuthenticated()" class="profile-details-list">
+        <div class="profile-item">
+            <strong class="profile-label">Username:</strong>
+            <span class="profile-value" sec:authentication="name">Nama Pengguna</span>
+        </div>
+        <div class="profile-item">
+            <strong class="profile-label">Email:</strong>
+            <span class="profile-value" th:text="${currentUser?.email ?: 'Email tidak tersedia'}">email@example.com</span>
+        </div>
+        <div class="profile-item">
+            <strong class="profile-label">Nama Lengkap:</strong>
+            <span class="profile-value" th:text="${currentUser?.nama ?: 'Nama tidak tersedia'}">Nama Lengkap Pengguna</span>
+        </div>
+    </div>
+
+    <div sec:authorize="isAuthenticated()" class="profile-actions">
+        <a th:href="@{/profile/edit}" class="action-button edit-button">Edit Profil</a>
+        <form th:action="@{/logout}" method="post" style="display: inline;"> <button type="submit" class="action-button logout-button">Logout</button>
+        </form>
+    </div>
+
+    <div sec:authorize="isAnonymous()" class="anonymous-message">
+        <p>Silakan <a th:href="@{/login}">login</a> untuk melihat profil Anda.</p>
+    </div>
+</div>
+
+</body>
+</html>

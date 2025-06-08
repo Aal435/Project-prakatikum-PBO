@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu Minuman - J.Coffee Drip</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f7f5;
+      color: #3e2723;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #6d4c41;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 30px;
+      border-radius: 10px;
+    }
+
+    .menu-section {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .menu-item {
+      display: flex;
+      width: 100%;
+      max-width: 800px;
+      background-color: #fff8f0;
+      border: 2px solid #d7ccc8;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(62, 39, 35, 0.15);
+      overflow: hidden;
+    }
+
+    .left-align {
+      align-self: flex-start;
+      flex-direction: row;
+      margin-right: auto;
+    }
+
+    .right-align {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+      margin-left: auto;
+    }
+
+    .menu-image {
+      width: 50%;
+      height: 200px;
+    }
+
+    .menu-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .menu-content {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .menu-content h3 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #5d4037;
+    }
+
+    .menu-content p {
+      font-size: 1rem;
+      color: #4e342e;
+      margin-bottom: 10px;
+    }
+
+    .menu-content .price {
+      font-weight: bold;
+      color: #6d4c41;
+      font-size: 1.1rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #6d4c41;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .menu-item {
+        flex-direction: column !important;
+        align-self: center;
+      }
+
+      .menu-image {
+        width: 100%;
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    Menu Minuman - J.Coffee Drip
+  </header>
+
+  <div class="menu-section">
+    <div class="menu-item left-align">
+      <div class="menu-image">
+        <img src="https://source.unsplash.com/600x400/?coffee" alt="Kopi Tubruk" />
+      </div>
+      <div class="menu-content">
+        <h3>Kopi Tubruk</h3>
+        <p>Kopi hitam klasik khas Indonesia, diseduh langsung tanpa ampas tersaring.</p>
+        <div class="price">Rp15.000</div>
+      </div>
+    </div>
+
+    <div class="menu-item right-align">
+      <div class="menu-image">
+        <img src="https://source.unsplash.com/600x400/?latte" alt="Caffe Latte" />
+      </div>
+      <div class="menu-content">
+        <h3>Caffe Latte</h3>
+        <p>Espresso yang lembut dipadukan dengan susu segar yang creamy.</p>
+        <div class="price">Rp25.000</div>
+      </div>
+    </div>
+
+    <div class="menu-item left-align">
+      <div class="menu-image">
+        <img src="https://source.unsplash.com/600x400/?matcha" alt="Matcha Latte" />
+      </div>
+      <div class="menu-content">
+        <h3>Matcha Latte</h3>
+        <p>Minuman hijau dari bubuk teh Jepang berkualitas, manis dan menyegarkan.</p>
+        <div class="price">Rp28.000</div>
+      </div>
+    </div>
+
+    <div class="menu-item right-align">
+      <div class="menu-image">
+        <img src="https://source.unsplash.com/600x400/?ice-tea" alt="Es Teh Lemon" />
+      </div>
+      <div class="menu-content">
+        <h3>Es Teh Lemon</h3>
+        <p>Teh hitam dingin dengan irisan lemon segar, menyegarkan di siang hari.</p>
+        <div class="price">Rp18.000</div>
+      </div>
+    </div>
+
+    <div class="menu-item left-align">
+      <div class="menu-image">
+        <img src="https://source.unsplash.com/600x400/?milkshake" alt="Vanilla Milkshake" />
+      </div>
+      <div class="menu-content">
+        <h3>Vanilla Milkshake</h3>
+        <p>Campuran susu segar, es krim vanilla, dan topping cokelat serut.</p>
+        <div class="price">Rp30.000</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 J.Coffee Drip - Semua Hak Dilindungi
+  </footer>
+
+</body>
+</html>
